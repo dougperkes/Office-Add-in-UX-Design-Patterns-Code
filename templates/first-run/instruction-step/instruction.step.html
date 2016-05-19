@@ -7,10 +7,13 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <title>Welcome Screen - Instruction Step Placemat</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
 
     <!-- For the Office UI Fabric, go to http://aka.ms/office-ui-fabric to learn more. -->
     <link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/2.1.0/fabric.min.css">
@@ -19,7 +22,47 @@
     <!-- Template styles -->
     <link href="../../../common.css" rel="stylesheet" />
     <link href="instruction.step.css" rel="stylesheet" type="text/css" />
+    <script>
+        $(document).ready(function() {
+            checkInstructionState();
+        });
+        
+        $(document).on("click", "#hideInstructionsButton", function() {
+            hideInstructions();
+            if (localStorage) {
+                localStorage.hideInstructions = "true";
+            }
+        });
+        
+        $(document).on("click", "#showInstructionsButton", function() {
+            if (localStorage) {
+                localStorage.hideInstructions = "false";
+            }
+            checkInstructionState();
+        })
+
+        function checkInstructionState() {
+            if (localStorage && localStorage.hideInstructions && localStorage.hideInstructions === "true") {
+                hideInstructions();
+            } else {
+                showInstructions();
+            }
+        }
+        
+        function hideInstructions() {
+            $(".ms-firstrun-instructionstep").hide('fast');
+            $(".ms-landing-page__main").show('fast');
+        }
+        
+        function showInstructions() {
+            $(".ms-firstrun-instructionstep").show('fast');
+            $(".ms-landing-page__main").hide('fast');
+        }
+        
+        
+    </script>
 </head>
+
 <body class="ms-font-l">
     <main class="ms-firstrun-instructionstep">
         <section class="ms-firstrun-instructionstep__header">
@@ -37,8 +80,8 @@
                     <span class="ms-ListItem-secondaryText">
                         <span class="ms-fontColor-themePrimary ">
                             <span class="ms-fontWeight-semibold ">Instruction step 1.</span>
-                            <span>Lorem ipsum dolor sit amet, consectetur elit, sed.</span>
-                        </span>
+                    <span>Lorem ipsum dolor sit amet, consectetur elit, sed.</span>
+                    </span>
                     </span>
                     <div class="clearfix"></div>
                 </li>
@@ -47,8 +90,8 @@
                     <span class="ms-ListItem-secondaryText">
                         <span class="ms-fontColor-themePrimary ">
                             <span class="ms-fontWeight-semibold">Instruction step 2.</span>
-                            <span>Lorem ipsum dolor sit amet.</span>
-                        </span>
+                    <span>Lorem ipsum dolor sit amet.</span>
+                    </span>
                     </span>
                     <div class="clearfix"></div>
                 </li>
@@ -57,7 +100,7 @@
                     <span class="ms-ListItem-secondaryText">
                         <span class="ms-fontColor-themePrimary ">
                             <span class="ms-fontWeight-semibold">Instruction step 3.</span>
-                        </span>
+                    </span>
                     </span>
                     <div class="clearfix"></div>
                 </li>
@@ -65,9 +108,30 @@
         </div>
         <div class="container">
             <p align="center">
-                <button id="loginO365PopupButton" class="popupButton ms-Button ms-Button--primary"><span class="ms-Button-label">Get Started!</span></button>
+                <button id="hideInstructionsButton" class="popupButton ms-Button ms-Button--primary"><span class="ms-Button-label">Get Started!</span></button>
+            </p>
+        </div>
+    </main>
+    <main class="ms-landing-page__main" style="display:none">
+        <section class="ms-landing-page__header ms-bgColor-themeLighter">
+            <div class="ms-landing-page__header--center ms-font-m ms-fontWeight-light">
+                <p>
+                    <i class="ms-Icon ms-Icon--plus ms-fontColor-themePrimary"></i> Item 1
+                </p>
+                <p>
+                    <i class="ms-Icon ms-Icon--plus ms-fontColor-themePrimary"></i> Item 2
+                </p>
+            </div>
+            <div class="ms-landing-page__header--right ms-font-m ms-fontWeight-light">
+                <i class="ms-Icon ms-Icon--reactivate ms-fontColor-themePrimary"></i>
+            </div>
+        </section>
+        <div class="container">
+            <p align="center">
+                <button id="showInstructionsButton" class="popupButton ms-Button ms-Button--primary"><span class="ms-Button-label">Show Instructions</span></button>
             </p>
         </div>
     </main>
 </body>
+
 </html>
